@@ -1,0 +1,263 @@
+---
+title: "Aides Drug"
+author: "Servio Maldonado"
+date: "12/02/19"
+output: html_document
+---
+
+```{r include=FALSE,echo=FALSE}
+require(tidyverse)
+require(tigerstats)
+avast <-read.csv(file="avastivironal.csv",header=TRUE)
+```
+
+# Introduction
+
+$H_O$: The drug has no effect on whether one contracts aids or does not
+
+$H_A$: The drug does affect susceptability to one one contracting aids
+
+<!--In this section you explain what you are trying to show.  Where did the data come from?  What is the research or other question you are trying to answer?.  If you skimp in this section expect to be marked down in your grade. Paint a picture of the project a couple of paragraphs is expected!-->
+
+
+A new  preventative aides (abacavirinol) is under test in clinical trials. Analyze the effectiveness of this drug across the board. Consider population subgroups by gender, drug use, and sexual orientation. Finish this!
+
+# Methods
+
+<!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method. Discuss what data manipulations may be needed for example subsetting or other binning procedures and what sort of graphical displays and inferential tools will be used!-->
+
+We will be using graphical barcharts,numerical tables and chisq test to find the p-value to find out if there is a connection between the use of the drug and the subjects susceptibility to contracting aids.
+
+#Results
+
+<!--Divide this section into two sub-sections:  One for your descriptive  results and one for your inferential results.!-->
+
+## Descriptive Results
+
+
+### Graphical Descriptive Results
+
+<!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
+
+
+```{r}
+barchartGC(~infected+treatment,data=avast,type="percent",  main="all")
+```
+
+This bargraph shows that the subjects on the drug were less susceptible to contracting aids then to those who did not receive the drug.
+
+### Numerical Descriptive Results
+
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+
+```{r}
+all=xtabs(~infected+treatment,data=avast)
+print(all)
+```
+
+This numerical chart shows that the subjects who were on the drug had a lower chance of contracting aids than those who didn't use the drug.
+## Inferential Results
+
+<!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+
+```{r}
+chisqtestGC(all)
+```
+The p-value for the chisq test is 0 < 0.05 suggest that there is a connection between the drug and the subject becoming susceptible to aids.
+
+# Discussion and Conclusion
+
+<!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+
+We reject the null hypothesis and conclude that we have enough evidence to support that this drug does reduce the likelyhood in contracting aids.
+
+
+
+
+
+## Descriptive Results
+
+
+### Graphical Descriptive Results
+
+<!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
+
+
+```{r}
+barchartGC(~infected+treatment,data=filter(avast,sex=="gal"),type="percent", main="gal")
+```
+
+This bargraph shows that the women on the drug were less susceptible to contracting aids then to those who did not receive the drug.
+
+### Numerical Descriptive Results
+
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+
+```{r}
+gals =xtabs(~infected + treatment, data = avast, sex=="gal")
+rowPerc (gals)
+```
+
+This numerical chart shows that the women who were on the drug had a lower chance of contracting aids than those who didn't use the drug
+
+
+## Inferential Results
+
+<!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+
+```{r}
+chisqtestGC (gals)
+```
+The p-value for the chisq test is 0 < 0.05 suggest that there is a connection between the drug and the women on the experimental drug becoming less susceptible to aids.
+
+# Discussion and Conclusion
+
+<!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+
+We reject the null hypothesis and conclude that we have enough eveidence to support that this drug does reduce the likelyhood in women who are on the drug from contracting aids.
+
+
+
+
+
+## Descriptive Results
+
+
+### Graphical Descriptive Results
+
+<!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
+
+
+```{r}
+barchartGC(~infected+treatment,data=filter(avast,sex=="guy"),type="percent", main="guy")
+```
+
+This bargraph shows that the men who took the drug were more likely to contract aids.
+
+### Numerical Descriptive Results
+
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+
+```{r}
+guy =xtabs(~infected + treatment, data = avast, sex=="guy")
+rowPerc (guy)
+```
+
+This numerical chart shows that the men who were on the drug had a higher chance of contracting aids than those who didn't use the drug.
+
+## Inferential Results
+
+<!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+
+```{r}
+chisqtestGC(guy)
+```
+
+ the p-value for the chisqtest is 1e-04 < 0.05, this suggest that there is a connection between the men who took the drug and their susceptibilty to aids. 
+
+# Discussion and Conclusion
+
+<!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+
+Since the p-value is 1e-04 < 0.05 we reject the null hypoyhesis and conclude that we have enough evidence to support that the drug does have an effect on men who use the drug versus those who didn't use the drug.
+
+
+
+
+
+## Descriptive Results
+
+
+### Graphical Descriptive Results
+
+<!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
+
+
+```{r}
+barchartGC(~infected+treatment, data=filter (avast, LGBTQ=="gay"), type = "percent", main="LGBTQ")
+```
+
+This bargraph shows that the drug has an affect on the LGBTQ population and they are more likely to contract aids than if they got the placebo.
+
+### Numerical Descriptive Results
+
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+
+```{r}
+LGBTQ =xtabs(~infected + treatment, data = avast, LGBTQ=="gay")
+rowPerc (LGBTQ)
+```
+
+This numerical chart shows that the LGBTQ poulation who were on the drug had a higher chance of contracting aids than those who didn't use the drug.
+## Inferential Results
+
+<!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+
+```{r}
+chisqtestGC(LGBTQ)
+        
+```
+
+The p-value for the chisq test is 0 < 0.05 suggest that there is a connection between the drug and the the LGBTQ population on the experimental drug becoming more susceptible to aids.
+
+
+# Discussion and Conclusion
+
+<!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+
+We reject the null hypothesis and conclude that we have enough evidence to support that there is a connection in the LGBTQ community with those who are on the drug and their susceptibility to contracting aids.
+
+
+
+
+
+## Descriptive Results
+
+
+### Graphical Descriptive Results
+
+<!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
+
+
+```{r}
+barchartGC(~infected+treatment, data=filter (avast, DrugUser=="yes"), type = "percent", main="DrugUser")
+```
+
+This bargraph shows that the drug does have an effect on the druguser population and they are less likely to contract aids than if they got the placebo.
+
+### Numerical Descriptive Results
+
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+
+```{r}
+DrugUser =xtabs(~infected + treatment, data = avast,DrugUser=="yes")
+rowPerc (DrugUser)
+```
+
+This numerical chart shows that the drug did have an effect on the drugusers and are less likely  to contract aids  than if they got the placebo
+
+
+## Inferential Results
+
+<!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+
+```{r}
+chisqtestGC(DrugUser)
+        
+```
+
+The p-value for the chisq test is 0 < 0.05 suggest that there is a connection between the drug and the the Drugusers on the experimental drug becoming less susceptible to aids.
+
+
+# Discussion and Conclusion
+
+<!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+
+We reject the null hypothesis and conclude that we have enough evidence to support that this drug does reduce the likelyhood in Drugusers who are on the drug from contracting aids.
+
+
